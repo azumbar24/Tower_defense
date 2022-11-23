@@ -1,6 +1,7 @@
 import pygame
 import sys
 import time
+from knight import Knight
 
 TILE_SIZE = 64
 WINDOW_SIZE = 15 * TILE_SIZE
@@ -24,18 +25,36 @@ screen.blit(knight, (500, 600))
 screen.blit(knight1, (300, 600))
 
 
-while True:
-        # checking for user inputs
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:
-                print('left')
-            if event.key == pygame.K_RIGHT:
-                print('right')
-            if event.key == pygame.K_UP:
-                print('jump')
+class TowerDefense:
+    def _check_events(self):
+        """Respond to keypresses"""
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                self._check_keydown_events(event)
+            elif event.type == pygame.KEYUP:
+                self._check_keyup_events(event)
 
-        if event.type == pygame.QUIT:
+    def _check_keydown_events(self, event):
+        """Respond to keypresses."""
+        if event.key == pygame.K_RIGHT:
+            self.knight.moving_right = True
+        elif event.key == pygame.K_LEFT:
+            self.knight.moving_left = True
+        elif event.key == pygame.K_q:
             sys.exit()
+
+
+    def _check_keyup_events(self, event):
+            """Respond to releases."""
+            if event.key == pygame.K_RIGHT:
+                self.knight.moving_right = False
+            elif event.key == pygame.K_LEFT:
+                self.knight.moving_left = False
+
+
+
 
 
 
@@ -46,4 +65,5 @@ pygame.display.set_caption('Tower_Defense')
 
 pygame.display.flip()
 #clock.tick(60)
-time.sleep(5)
+time.sleep(7)
+
