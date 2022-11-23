@@ -10,18 +10,18 @@ tower = pygame.image.load("assets/towerAlt.png")
 tower_rect = tower.get_rect()
 background = pygame.image.load("assets/backgroundColorGrass.png")
 background_rect = background.get_rect()
-crusader = pygame.image.load("assets/Crusader.png")
-crusader_rect = crusader.get_rect()
-crusader1 = pygame.image.load("assets/Crusader1.png")
-crusader1_rect = crusader1.get_rect()
+knight = pygame.image.load("assets/Knight.png")
+knight_rect = knight.get_rect()
+knight1 = pygame.image.load("assets/Knight1.png")
+knight1_rect = knight1.get_rect()
 
 screen_rect = screen.get_rect()
 
 num_tiles = screen_rect.width // tower_rect.width
 screen.blit(background, (0, 50))
 screen.blit(tower, (400, 475))
-screen.blit(crusader, (500, 600))
-screen.blit(crusader1, (300, 600))
+screen.blit(knight, (500, 600))
+screen.blit(knight1, (300, 600))
 
 
 while True:
