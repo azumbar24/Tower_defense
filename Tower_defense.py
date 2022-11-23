@@ -11,8 +11,8 @@ tower = pygame.image.load("assets/towerAlt.png")
 tower_rect = tower.get_rect()
 background = pygame.image.load("assets/backgroundColorGrass.png")
 background_rect = background.get_rect()
-knight = pygame.image.load("assets/Knight.png")
-knight_rect = knight.get_rect()
+#knight = pygame.image.load("assets/Knight.png")
+#knight_rect = knight.get_rect()
 knight1 = pygame.image.load("assets/Knight1.png")
 knight1_rect = knight1.get_rect()
 
@@ -21,11 +21,25 @@ screen_rect = screen.get_rect()
 num_tiles = screen_rect.width // tower_rect.width
 screen.blit(background, (0, 50))
 screen.blit(tower, (400, 475))
-screen.blit(knight, (500, 600))
+#screen.blit(knight, (500, 600))
 screen.blit(knight1, (300, 600))
 
 
 class TowerDefense:
+
+    def __init__(self):
+        """Initializing the game, and create game resources."""
+        pygame.init()
+        self.settings = Settings()
+
+        self.screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
+        self.settings.screen_width = self.screen.get_rect().width
+        self.settings.screen_height = self.screen.get_rect().height
+
+        pygame.display.set_caption("Tower Defense")
+
+        self.knight = Knight(self)
+
     def _check_events(self):
         """Respond to keypresses"""
         for event in pygame.event.get():
@@ -61,7 +75,6 @@ class TowerDefense:
 #clock = pygame.tick.Clock()
 
 pygame.init()
-pygame.display.set_caption('Tower_Defense')
 
 pygame.display.flip()
 #clock.tick(60)
