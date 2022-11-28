@@ -8,7 +8,7 @@ class Knight:
         self.speed = 2
 
         # Loading the knight image
-        self.image = pygame.image.load('assets/Knight1.png')
+        self.image = pygame.image.load('assets/Knight.png')
         self.rect = self.image.get_rect()
 
         # knight's starting position is at the middle bottom of the screen
