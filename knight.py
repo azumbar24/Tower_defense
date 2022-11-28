@@ -5,10 +5,10 @@ class Knight:
     def __init__(self, ai_game):
         """Knights starting position"""
         self.screen = ai_game.screen
-        self.settings = ai_game.settings
+        self.speed = 2
 
         # Loading the knight image
-        self.image = pygame.image.load('assets/Knight.bmp')
+        self.image = pygame.image.load('assets/Knight1.png')
         self.rect = self.image.get_rect()
 
         # knight's starting position is at the middle bottom of the screen
@@ -25,9 +25,9 @@ class Knight:
         """Update the ships position based on movement flag"""
         # Update the knight's x value, not the rect
         if self.moving_right and self.rect.right < self.screen.get_rect().right:
-            self.x += self.settings.ship_speed
+            self.x += self.speed
         if self.moving_left and self.rect.left > 0:
-            self.x -= self.settings.ship_speed
+            self.x -= self.speed
 
         # Update rect object from self.x
         self.rect.x = self.x
