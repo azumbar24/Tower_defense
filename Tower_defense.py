@@ -16,6 +16,8 @@ knight = pygame.image.load("assets/Knight.png")
 knight_rect = knight.get_rect()
 knight1 = pygame.image.load("assets/Knight1.png")
 knight1_rect = knight1.get_rect()
+goblin = pygame.image.load("assets/goblin.png")
+goblin_rect = goblin.get_rect()
 
 screen_rect = screen.get_rect()
 
@@ -48,6 +50,7 @@ class TowerDefense:
             self.knight.update()
             screen.blit(background, (130, 20))
             screen.blit(tower, (600, 430))
+            screen.blit(goblin, (800, 625))
             self._update_screen()
 
     def _check_events(self):
@@ -78,10 +81,10 @@ class TowerDefense:
                 self.knight.moving_left = False
 
     def _update_screen(self):
-        # Update images on the screen, and flip to the new scren.
+        # Update images on the screen, and flip to the new screen.
         self.knight.blitme()
 
-        # make the most recently drawn screen visisble.
+        # make the most recently drawn screen visible.
         pygame.display.flip()
 
 
