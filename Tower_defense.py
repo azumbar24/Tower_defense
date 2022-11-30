@@ -2,6 +2,7 @@ import pygame
 import sys
 import time
 from knight import Knight
+from goblin import Goblin
 from settings import Settings
 
 TILE_SIZE = 64
@@ -12,10 +13,6 @@ tower = pygame.image.load("assets/towerAlt.png")
 tower_rect = tower.get_rect()
 background = pygame.image.load("assets/backgroundColorGrass.png")
 background_rect = background.get_rect()
-knight = pygame.image.load("assets/Knight.png")
-knight_rect = knight.get_rect()
-knight1 = pygame.image.load("assets/Knight1.png")
-knight1_rect = knight1.get_rect()
 goblin = pygame.image.load("assets/goblin.png")
 goblin_rect = goblin.get_rect()
 
@@ -23,8 +20,6 @@ screen_rect = screen.get_rect()
 
 num_tiles = screen_rect.width // tower_rect.width
 
-#screen.blit(knight, (500, 600))
-screen.blit(knight1, (300, 600))
 
 
 class TowerDefense:
@@ -41,6 +36,7 @@ class TowerDefense:
         pygame.display.set_caption("Tower Defense")
 
         self.knight = Knight(self)
+        self.goblin = Goblin(self)
 
     def run_game(self):
         """Start the main loop for the game"""
