@@ -44,9 +44,9 @@ class TowerDefense:
             self._check_events()
 
             self.knight.update()
+            self.goblin.update()
             screen.blit(background, (130, 20))
             screen.blit(tower, (600, 430))
-            screen.blit(goblin, (800, 625))
             self._update_screen()
 
     def _check_events(self):
@@ -65,6 +65,10 @@ class TowerDefense:
             self.knight.moving_right = True
         elif event.key == pygame.K_LEFT:
             self.knight.moving_left = True
+        if event.key == pygame.K_d:
+            self.goblin.moving_right = True
+        elif event.key == pygame.K_a:
+            self.goblin.moving_left = True
         elif event.key == pygame.K_q:
             sys.exit()
 
@@ -75,10 +79,15 @@ class TowerDefense:
                 self.knight.moving_right = False
             elif event.key == pygame.K_LEFT:
                 self.knight.moving_left = False
+            if event.key == pygame.K_d:
+                self.goblin.moving_right = False
+            elif event.key == pygame.K_a:
+                self.goblin.moving_left = False
 
     def _update_screen(self):
         # Update images on the screen, and flip to the new screen.
         self.knight.blitme()
+        self.goblin.blitme()
 
         # make the most recently drawn screen visible.
         pygame.display.flip()
