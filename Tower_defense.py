@@ -8,19 +8,27 @@ from settings import Settings
 TILE_SIZE = 64
 WINDOW_SIZE = 15 * TILE_SIZE
 screen = pygame.display.set_mode((WINDOW_SIZE, WINDOW_SIZE))
+#clock = pygame.tick.Clock()
+#clock.tick(60)
 
 tower = pygame.image.load("assets/towerAlt.png")
 tower_rect = tower.get_rect()
 background = pygame.image.load("assets/backgroundColorGrass.png")
 background_rect = background.get_rect()
-goblin = pygame.image.load("assets/goblin.png")
-goblin_rect = goblin.get_rect()
+
 
 screen_rect = screen.get_rect()
 
 num_tiles = screen_rect.width // tower_rect.width
 
-
+# self.current_health = 100
+# self.health_bar_length = 200
+# self.health_ratio = self.current_health / self.health_bar_length
+# def get_damage(self, amount):
+    # if self.current_health > 0:
+        # self.current_amount -= amount
+    # if self.current_health <= 0:
+        # self.current_health = 0
 
 class TowerDefense:
 
@@ -59,6 +67,11 @@ class TowerDefense:
             elif event.type == pygame.KEYUP:
                 self._check_keyup_events(event)
 
+        #collision = pygame.sprite.collide_rect(Goblin, tower)
+        #if collision:
+            #tower.health = tower.health - 1
+            #print(f"Collision: tower health={ship.health}!!")
+
     def _check_keydown_events(self, event):
         """Respond to key presses."""
         if event.key == pygame.K_RIGHT:
@@ -93,10 +106,6 @@ class TowerDefense:
         pygame.display.flip()
 
 
-
-
-    # clock = pygame.tick.Clock()
-    # clock.tick(60)
 
 if __name__=='__main__':
     #make a game instance, and run the game.
