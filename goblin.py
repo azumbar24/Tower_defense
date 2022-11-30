@@ -1,32 +1,42 @@
 import pygame
-from pygame.sprite import Sprite
 
-class Goblin(Sprite):
-    """A class to represent a goblin"""
+class Goblin:
 
     def __init__(self, ai_game):
-        "Initializing the goblin and set its starting position"
-        super().__init__()
+        """Goblins starting position"""
         self.screen = ai_game.screen
-        self.settings = ai_game.settings
+        self.speed = 2
 
-        # Load the goblin image and set its rect attribute
+        # Loading the goblin image
         self.image = pygame.image.load('assets/goblin.png')
         self.rect = self.image.get_rect()
 
-        # Start each goblin near the top left of the screen
-        self.rect.x = self.rect.width
-        self.rect.y = self.rect.height
+        # Goblin's starting position is at the middle bottom of the screen
+        self.rect.midbottom = self.screen.get_rect().midbottom
 
-        # store the goblin exact horizontal position
+        # store a decimal value for the knights horizontal position
         self.x = float(self.rect.x)
 
+        # Movement flags
+        self.moving_right = False
+        self.moving_left = False
+
     def update(self):
-        """Move the goblin to the right or left"""
-        self.x += (self.settings.goblin_speed * self.settings.fleet_direction)
+        """Update the ships position based on movement flag"""
+        # Update the goblin's x value, not the rect
+        if self.moving_right and self.rect.right < self.screen.get_rect().right:
+            self.x += self.speed
+        if self.moving_left and self.rect.left > 0:
+            self.x -= self.speed
+
+        # Update rect object from self.x
         self.rect.x = self.x
-    def check_edges(self):
-        """return true if goblin is at the edge of the screen"""
-        screen_rect = self.screen.get_rect()
-        if self.rect.right >= screen_rect.right or self.rect.left <= 0:
-            return True
+
+    def blitme(self):
+        """Draw the goblin at its current location."""
+        self.screen.blit(self.image, self.rect)
+
+    def center_goblin(self):
+        """center the goblin on the screen"""
+        self.rect.midbottom = self.screen_rect.midbottom
+        self.x = float(self.rect.x)
