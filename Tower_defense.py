@@ -100,9 +100,9 @@ class TowerDefense:
         self.current_health = 0
     def basic_health(self):
         # draw the health bar on the screen
-        pygame.draw.rect(screen, (255,0,0), (440,60, self.current_health/self.health_ratio, 35))
+        pygame.draw.rect(screen, (255,0,0), (150,60, self.current_health/self.health_ratio, 35))
         # draw the white border of the health bar
-        pygame.draw.rect(screen, (255,255,255), (440,60,self.health_bar_length, 35), 4)
+        pygame.draw.rect(screen, (0,0,0), (150,60,self.health_bar_length, 35), 4)
 
 
     def _update_screen(self):
