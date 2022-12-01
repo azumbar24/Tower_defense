@@ -2,7 +2,7 @@ import pygame
 import sys
 import time
 from knight import Knight
-from goblin import Goblin
+from warrior import Warrior
 from settings import Settings
 
 TILE_SIZE = 64
@@ -39,16 +39,16 @@ class TowerDefense:
 
         pygame.display.set_caption("Tower Defense")
 
+        self.warrior = Warrior(self)
         self.knight = Knight(self)
-        self.goblin = Goblin(self)
 
     def run_game(self):
         """Start the main loop for the game"""
         while True:
             self._check_events()
 
+            self.warrior.update()
             self.knight.update()
-            self.goblin.update()
             screen.blit(background, (130, 20))
             screen.blit(tower, (600, 430))
             self._update_screen()
@@ -70,28 +70,29 @@ class TowerDefense:
 
     def _check_keydown_events(self, event):
         """Respond to key presses."""
+        if event.key == pygame.K_d:
+            self.warrior.moving_right = True
+        elif event.key == pygame.K_a:
+            self.warrior.moving_left = True
         if event.key == pygame.K_RIGHT:
             self.knight.moving_right = True
         elif event.key == pygame.K_LEFT:
             self.knight.moving_left = True
-        if event.key == pygame.K_d:
-            self.goblin.moving_right = True
-        elif event.key == pygame.K_a:
-            self.goblin.moving_left = True
         elif event.key == pygame.K_q:
             sys.exit()
 
 
     def _check_keyup_events(self, event):
             """Respond to releases."""
+            if event.key == pygame.K_d:
+                self.warrior.moving_right = False
+            elif event.key == pygame.K_a:
+                self.warrior.moving_left = False
             if event.key == pygame.K_RIGHT:
                 self.knight.moving_right = False
             elif event.key == pygame.K_LEFT:
                 self.knight.moving_left = False
-            if event.key == pygame.K_d:
-                self.goblin.moving_right = False
-            elif event.key == pygame.K_a:
-                self.goblin.moving_left = False
+
 
     def get_damage(self, amount):
       if self.current_health > 0:
@@ -107,8 +108,8 @@ class TowerDefense:
 
     def _update_screen(self):
         # Update images on the screen, and flip to the new screen.
+        self.warrior.blitme()
         self.knight.blitme()
-        self.goblin.blitme()
         self.basic_health()
         # make the most recently drawn screen visible.
         pygame.display.flip()
