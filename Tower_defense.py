@@ -21,14 +21,7 @@ screen_rect = screen.get_rect()
 
 num_tiles = screen_rect.width // tower_rect.width
 
-# self.current_health = 100
-# self.health_bar_length = 200
-# self.health_ratio = self.current_health / self.health_bar_length
-# def get_damage(self, amount):
-    # if self.current_health > 0:
-        # self.current_amount -= amount
-    # if self.current_health <= 0:
-        # self.current_health = 0
+
 
 class TowerDefense:
 
@@ -40,6 +33,9 @@ class TowerDefense:
         self.screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
         self.settings.screen_width = self.screen.get_rect().width
         self.settings.screen_height = self.screen.get_rect().height
+        self.current_health = 100
+        self.health_bar_length = 400
+        self.health_ratio = self.current_health / self.health_bar_length
 
         pygame.display.set_caption("Tower Defense")
 
@@ -97,11 +93,23 @@ class TowerDefense:
             elif event.key == pygame.K_a:
                 self.goblin.moving_left = False
 
+    def get_damage(self, amount):
+      if self.current_health > 0:
+        self.current_amount -= amount
+      if self.current_health <= 0:
+        self.current_health = 0
+    def basic_health(self):
+        # draw the health bar on the screen
+        pygame.draw.rect(screen, (255,0,0), (440,60, self.current_health/self.health_ratio, 35))
+        # draw the white border of the health bar
+        pygame.draw.rect(screen, (255,255,255), (440,60,self.health_bar_length, 35), 4)
+
+
     def _update_screen(self):
         # Update images on the screen, and flip to the new screen.
         self.knight.blitme()
         self.goblin.blitme()
-
+        self.basic_health()
         # make the most recently drawn screen visible.
         pygame.display.flip()
 
