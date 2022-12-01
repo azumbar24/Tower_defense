@@ -26,8 +26,10 @@ class Knight:
         # Update the knight's x value, not the rect
         if self.moving_right and self.rect.right < self.screen.get_rect().right:
             self.x += self.speed
+            self.image = pygame.image.load('assets/Knight.png')
         if self.moving_left and self.rect.left > 0:
             self.x -= self.speed
+            self.image = pygame.image.load('assets/Knight1.png')
 
         # Update rect object from self.x
         self.rect.x = self.x
