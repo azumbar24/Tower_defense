@@ -22,7 +22,6 @@ screen_rect = screen.get_rect()
 num_tiles = screen_rect.width // tower_rect.width
 
 
-
 class TowerDefense:
 
     def __init__(self):
@@ -46,7 +45,6 @@ class TowerDefense:
         """Start the main loop for the game"""
         while True:
             self._check_events()
-
             self.warrior.update()
             self.knight.update()
             screen.blit(background, (130, 20))
@@ -101,9 +99,27 @@ class TowerDefense:
         self.current_health = 0
     def basic_health(self):
         # draw the health bar on the screen
-        pygame.draw.rect(screen, (255,0,0), (150,60, self.current_health/self.health_ratio, 35))
+        pygame.draw.rect(screen, (255,0,0), (150,80, self.current_health/self.health_ratio, 42))
         # draw the white border of the health bar
-        pygame.draw.rect(screen, (0,0,0), (150,60,self.health_bar_length, 35), 4)
+        pygame.draw.rect(screen, (0,0,0), (150,80,self.health_bar_length, 42), 4)
+        font = pygame.font.SysFont("verdana", 36)
+        health_img = font.render(f'Health', True, (0, 0, 0))
+        health_img_rect = health_img.get_rect()
+        screen.blit(health_img, (290, 25))
+
+    def timer(self):
+        """Function that starts with a score then subtracts as time goes"""
+        global score
+        # save the score
+        score = 0
+        # for every tick add 1 from the score
+        score += 1
+        # display the score in the top right and change at every refresh. dynamic
+        font = pygame.font.SysFont("verdana", 48)
+        img = font.render(f'Score: {score * 100}', True, (0, 0, 255))
+        img_rect = img.get_rect()
+        screen.blit(img, (850, 50))
+        pygame.display.flip()
 
 
     def _update_screen(self):
@@ -111,7 +127,9 @@ class TowerDefense:
         self.warrior.blitme()
         self.knight.blitme()
         self.basic_health()
+        self.timer()
         # make the most recently drawn screen visible.
+        #pygame.display.update(screen)
         pygame.display.flip()
 
 
