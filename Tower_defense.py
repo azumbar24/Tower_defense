@@ -135,7 +135,7 @@ class TowerDefense:
             # established terms for what x destination goblins need to reach to damage tower
             if (i.x > 560 and i.speed == 0.2) or (i.x < 620 and i.speed == -0.2):
                 self.goblins.remove(i)
-                self.current_health -= 100
+                self.current_health -= 5
         #if self.current_health == 0:
             #screen.fill = ((0,0,0))
         self.warrior.blitme()
