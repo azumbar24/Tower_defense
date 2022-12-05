@@ -22,7 +22,7 @@ class Knight:
         self.moving_left = False
 
     def update(self):
-        """Update the ships position based on movement flag"""
+        """Update the knights position based on movement flag"""
         # Update the knight's x value, not the rect
         if self.moving_right and self.rect.right < self.screen.get_rect().right:
             self.x += self.speed

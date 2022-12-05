@@ -64,6 +64,7 @@ class TowerDefense:
         """Create a goblin, if conditions are right."""
         # Every tick a random numb between 0-1 is generated.
         goblin_frequency = .004
+        self.goblin_health = 100
         if random() < goblin_frequency:
             # assign variables for fan functions
             self.goblins.append(Goblin(self))
@@ -104,12 +105,6 @@ class TowerDefense:
             elif event.key == pygame.K_LEFT:
                 self.knight.moving_left = False
 
-
-    def get_damage(self, amount):
-      if self.current_health > 0:
-        self.current_amount -= amount
-      if self.current_health <= 0:
-        self.current_health = 0
     def basic_health(self):
         # draw the health bar on the screen
         pygame.draw.rect(screen, (255,0,0), (150,80, self.current_health/self.health_ratio, 42))
@@ -132,9 +127,18 @@ class TowerDefense:
         self.screen.fill((0, 0, 0))
         screen.blit(background, (130, 20))
         screen.blit(tower, (600, 430))
-        self.warrior.blitme()
-        for i in self.goblins:
+        # method for deleting goblins, made an array and delete goblins from the right
+        # that way they don't flicker when they reach the tower, removes 5 health points from the tower for every gob
+        for j in range(len(self.goblins) - 1, -1, -1):
+            i = self.goblins[j]
             i.blitme()
+            # established terms for what x destination goblins need to reach to damage tower
+            if (i.x > 560 and i.speed == 0.2) or (i.x < 620 and i.speed == -0.2):
+                self.goblins.remove(i)
+                self.current_health -= 100
+        #if self.current_health == 0:
+            #screen.fill = ((0,0,0))
+        self.warrior.blitme()
         self.knight.blitme()
         self.basic_health()
         self.draw_time(score)
