@@ -7,5 +7,5 @@ A combat game
 * Survive as long as possible!
 
 ## Credits
-MIDN Dennis "Moose" Moynihan: Helped with sounds
-MIDN Solomon Woldeselassie: Helped blit the scoreboard
+* MIDN Dennis "Moose" Moynihan: Helped with sounds
+* MIDN Solomon Woldeselassie: Helped blit the scoreboard
