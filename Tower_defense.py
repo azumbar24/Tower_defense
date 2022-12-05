@@ -53,6 +53,7 @@ class TowerDefense:
             self.warrior.update()
             self.knight.update()
             self._create_goblin()
+            # created a range for goblins to spawn
             for i in self.goblins:
                 i.update()
             self._update_screen(score//60)
@@ -121,6 +122,16 @@ class TowerDefense:
         img = font.render(f'Score:{score * 100}', True, (0, 0, 255))
         screen.blit(img, (850, 50))
 
+    def game_over(self):
+        """shows game over screen"""
+        screen.fill((255,0,0))
+        game_over_img = font.render(f'GAME OVER', True, (255, 255, 255))
+        game_over_img_rect = game_over_img.get_rect()
+        screen.blit(game_over_img, (500, 350))
+
+
+
+
     def _update_screen(self, score):
         global goblins
         # Update images on the screen, and flip to the new screen.
@@ -135,13 +146,14 @@ class TowerDefense:
             # established terms for what x destination goblins need to reach to damage tower
             if (i.x > 560 and i.speed == 0.2) or (i.x < 620 and i.speed == -0.2):
                 self.goblins.remove(i)
-                self.current_health -= 5
-        #if self.current_health == 0:
-            #screen.fill = ((0,0,0))
+                self.current_health -= 100
         self.warrior.blitme()
         self.knight.blitme()
         self.basic_health()
         self.draw_time(score)
+        if self.current_health == 0:
+            self.game_over()
+
         # make the most recently drawn screen visible.
         pygame.display.update()
 
