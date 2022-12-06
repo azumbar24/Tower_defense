@@ -24,6 +24,7 @@ screen_rect = screen.get_rect()
 
 num_tiles = screen_rect.width // tower_rect.width
 
+file = "sword_draw.mp3"
 
 class TowerDefense:
 
@@ -84,6 +85,8 @@ class TowerDefense:
         """Respond to key presses."""
         if event.key == pygame.K_SPACE and self.knight.cooldown == 0:
             self.knight.cooldown = 20
+            slash = pygame.mixer.Sound(file)
+            pygame.mixer.Sound.play(slash)
         if event.key == pygame.K_x and self.warrior.cooldown == 0:
             self.warrior.cooldown = 20
         if event.key == pygame.K_d:

@@ -34,8 +34,12 @@ class Knight:
             self.face_right = False
             self.x -= self.speed
             self.image = pygame.image.load('assets/Knight1.png')
+        # establishes which slashing pic to use when facing a certain direction
         if self.cooldown > 0:
-            self.image = pygame.image.load('assets/knight_slashing.png')
+            if self.face_right:
+                self.image = pygame.image.load('assets/knight_slashing.png')
+            else:
+                self.image = pygame.image.load('assets/knight_slashing1.png')
         else:
             if self.face_right:
                 self.image = pygame.image.load('assets/Knight.png')

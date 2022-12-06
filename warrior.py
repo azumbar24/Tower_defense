@@ -35,7 +35,10 @@ class Warrior:
             self.x -= self.speed
             self.image = pygame.image.load('assets/Warrior1.png')
         if self.cooldown > 0:
-            self.image = pygame.image.load('assets/warrior_slashing.png')
+            if self.face_right:
+                self.image = pygame.image.load('assets/warrior_slashing.png')
+            else:
+                self.image = pygame.image.load('assets/warrior_slashing1.png')
         else:
             if self.face_right:
                 self.image = pygame.image.load('assets/Warrior.png')
