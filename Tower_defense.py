@@ -25,6 +25,12 @@ screen_rect = screen.get_rect()
 num_tiles = screen_rect.width // tower_rect.width
 
 file = "sword_draw.mp3"
+file1 = "spear_throw.mp3"
+muzak = "Battle 1.mp3"
+
+battle_song = pygame.mixer.Sound(muzak)
+pygame.mixer.Sound.play(battle_song)
+playsound = True
 
 class TowerDefense:
 
@@ -89,6 +95,8 @@ class TowerDefense:
             pygame.mixer.Sound.play(slash)
         if event.key == pygame.K_x and self.warrior.cooldown == 0:
             self.warrior.cooldown = 20
+            hit = pygame.mixer.Sound(file1)
+            pygame.mixer.Sound.play(hit)
         if event.key == pygame.K_d:
             self.warrior.moving_right = True
         elif event.key == pygame.K_a:
