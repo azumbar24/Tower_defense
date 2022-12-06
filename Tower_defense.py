@@ -116,9 +116,9 @@ class TowerDefense:
         # draw the white border of the health bar
         pygame.draw.rect(screen, (0,0,0), (150,80,self.health_bar_length, 42), 4)
         font = pygame.font.SysFont("verdana", 36)
-        health_img = font.render(f'Health', True, (0, 0, 0))
+        health_img = font.render(f'Tower Health', True, (0, 0, 0))
         health_img_rect = health_img.get_rect()
-        screen.blit(health_img, (290, 25))
+        screen.blit(health_img, (240, 25))
 
     def draw_time(self, score):
         """Function that starts with a score then subtracts as time goes"""
@@ -150,13 +150,16 @@ class TowerDefense:
             i = self.goblins[j]
             i.blitme()
             # established terms for what x destination goblins need to reach to damage tower
-            if (i.x > 560 and i.speed == 0.4) or (i.x < 620 and i.speed == -0.4):
+            if (i.x > 560 and i.speed == 1.8) or (i.x < 620 and i.speed == -1.8):
                 self.goblins.remove(i)
                 self.current_health -= 10
+            # made a slight pause for in between swings to kill gobs, 20 ticks, range of = or - 20
+            # pixels from ech character
             elif(self.warrior.cooldown == 20 and i.x - self.warrior.x >= -50 and i.x - self.warrior.x <= 50):
                 self.goblins.remove(i)
             elif(self.knight.cooldown == 20 and i.x - self.knight.x >= -50 and i.x - self.knight.x <= 50):
                 self.goblins.remove(i)
+        # ticker for how long the cooldown should last
         if(self.knight.cooldown > 0):
             self.knight.cooldown -= 1
         if(self.warrior.cooldown > 0):
