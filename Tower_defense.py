@@ -1,6 +1,5 @@
 import pygame
 import sys
-import time
 from knight import Knight
 from warrior import Warrior
 from settings import Settings
@@ -83,6 +82,10 @@ class TowerDefense:
 
     def _check_keydown_events(self, event):
         """Respond to key presses."""
+        if event.key == pygame.K_SPACE and self.knight.cooldown == 0:
+            self.knight.cooldown = 20
+        if event.key == pygame.K_x and self.warrior.cooldown == 0:
+            self.warrior.cooldown = 20
         if event.key == pygame.K_d:
             self.warrior.moving_right = True
         elif event.key == pygame.K_a:
@@ -93,6 +96,7 @@ class TowerDefense:
             self.knight.moving_left = True
         elif event.key == pygame.K_q:
             sys.exit()
+
 
 
     def _check_keyup_events(self, event):
@@ -124,10 +128,12 @@ class TowerDefense:
 
     def game_over(self):
         """shows game over screen"""
-        screen.fill((255,0,0))
-        game_over_img = font.render(f'GAME OVER', True, (255, 255, 255))
-        game_over_img_rect = game_over_img.get_rect()
-        screen.blit(game_over_img, (500, 350))
+        global score
+        screen.fill((255, 0, 0))
+        #img = font.render(f'GAME OVER: Score: {score * 100}', True, (255, 255, 255))
+        #img_rect = img.get_rect()
+        #img_rect.center = screen.get_rect().center
+        #screen.blit(img, img_rect)
 
 
 
@@ -144,9 +150,17 @@ class TowerDefense:
             i = self.goblins[j]
             i.blitme()
             # established terms for what x destination goblins need to reach to damage tower
-            if (i.x > 560 and i.speed == 0.2) or (i.x < 620 and i.speed == -0.2):
+            if (i.x > 560 and i.speed == 0.4) or (i.x < 620 and i.speed == -0.4):
                 self.goblins.remove(i)
-                self.current_health -= 100
+                self.current_health -= 10
+            elif(self.warrior.cooldown == 20 and i.x - self.warrior.x >= -50 and i.x - self.warrior.x <= 50):
+                self.goblins.remove(i)
+            elif(self.knight.cooldown == 20 and i.x - self.knight.x >= -50 and i.x - self.knight.x <= 50):
+                self.goblins.remove(i)
+        if(self.knight.cooldown > 0):
+            self.knight.cooldown -= 1
+        if(self.warrior.cooldown > 0):
+            self.warrior.cooldown -= 1
         self.warrior.blitme()
         self.knight.blitme()
         self.basic_health()

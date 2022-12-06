@@ -6,6 +6,8 @@ class Knight:
         """Knights starting position"""
         self.screen = ai_game.screen
         self.speed = 2
+        self.cooldown = 0
+        self.face_right = True
 
         # Loading the knight image
         self.image = pygame.image.load('assets/Knight.png')
@@ -25,11 +27,20 @@ class Knight:
         """Update the knights position based on movement flag"""
         # Update the knight's x value, not the rect
         if self.moving_right and self.rect.right < self.screen.get_rect().right:
+            self.face_right = True
             self.x += self.speed
             self.image = pygame.image.load('assets/Knight.png')
         if self.moving_left and self.rect.left > 0:
+            self.face_right = False
             self.x -= self.speed
             self.image = pygame.image.load('assets/Knight1.png')
+        if self.cooldown > 0:
+            self.image = pygame.image.load('assets/knight_slashing.png')
+        else:
+            if self.face_right:
+                self.image = pygame.image.load('assets/Knight.png')
+            else:
+                self.image = pygame.image.load('assets/Knight1.png')
 
         # Update rect object from self.x
         self.rect.x = self.x

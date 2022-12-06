@@ -6,6 +6,7 @@ class Warrior:
         """Warrior's starting position"""
         self.screen = ai_game.screen
         self.speed = 2
+        self.cooldown = 0
 
         # Loading the warrior image
         self.image = pygame.image.load('assets/Warrior.png')
