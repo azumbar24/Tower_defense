@@ -5,7 +5,7 @@ class Knight:
     def __init__(self, ai_game):
         """Knights starting position"""
         self.screen = ai_game.screen
-        self.speed = 2
+        self.speed = 3
         self.cooldown = 0
         self.face_right = True
 
@@ -26,6 +26,7 @@ class Knight:
     def update(self):
         """Update the knights position based on movement flag"""
         # Update the knight's x value, not the rect
+        # determines which way the knight will face given certain criteria
         if self.moving_right and self.rect.right < self.screen.get_rect().right:
             self.face_right = True
             self.x += self.speed

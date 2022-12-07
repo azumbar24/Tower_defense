@@ -5,7 +5,7 @@ class Warrior:
     def __init__(self, ai_game):
         """Warrior's starting position"""
         self.screen = ai_game.screen
-        self.speed = 2
+        self.speed = 3
         self.cooldown = 0
         self.face_right = True
 
