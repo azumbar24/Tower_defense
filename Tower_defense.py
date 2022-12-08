@@ -41,7 +41,7 @@ class TowerDefense:
         self.screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
         self.settings.screen_width = self.screen.get_rect().width
         self.settings.screen_height = self.screen.get_rect().height
-        self.current_health = 100
+        self.current_health = int(100)
         self.health_bar_length = 400
         self.health_ratio = self.current_health / self.health_bar_length
         self.goblins = []
@@ -54,7 +54,9 @@ class TowerDefense:
 
     def run_game(self):
         """Start the main loop for the game"""
-        while True:
+        running = True
+        while running:
+            playsound = True
             self._check_events()
             self.warrior.update()
             self.knight.update()
@@ -62,11 +64,19 @@ class TowerDefense:
             # created a range for goblins to spawn
             for i in self.goblins:
                 i.update()
-            self._update_screen(self.score//60)
+            running = self._update_screen(self.score//60)
             self.clock.tick(60)
             self.score += 1
             # slowly regenerates health back for the tower, adds an 100th health per sec
             self.current_health = min(100, self.current_health + 1/100)
+
+        self.draw_game_over(self.score//60)
+        pygame.display.update()
+        while True:
+            for event in pygame.event.get():
+                if event.key == pygame.K_q:
+                    sys.exit()
+
 
 
     def _create_goblin(self):
@@ -138,29 +148,21 @@ class TowerDefense:
         img = font.render(f'Score:{score * 100}', True, (0, 0, 255))
         screen.blit(img, (850, 50))
 
-    def draw_game_over(screen):
-        pygame.draw.rect(screen, (255,0,0), (200, 200, 300, 100), 0)  # Draw a red box for the text to sit in
+    def draw_game_over(self, score):
+        screen.fill((255,0,0))
+        img = font.render(f'GAME OVER!', True, (255, 255, 255))
+        font1 = pygame.font.SysFont("verdana", 32)
+        score_img = font1.render(f'Score:{int(score * 100)}', True, (150, 0, 255))
+        instructions_img = font.render(f'Press Q to quit!', True, (0, 0, 0))
+        screen.blit(img, (500, 100))
+        screen.blit(score_img, (540, 200))
+        screen.blit(instructions_img, (470, 350))
 
-        font = pygame.font.Font(None, 36)  # Choose the font for the text
-        text = font.render("Game Over!", 1, (255,255,255))  # Create the text for "GAME OVER"
-        screen.blit(text, (280, 220))  # Draw the text on the screen
-
-        font = pygame.font.Font(None, 28)  # Make the font a bit smaller for this bit
-        text = font.render("Press p to play again. Press q to quit the game.", 1,
-                           (255,255,255))  # Create text for instructions on what to do now
-        screen.blit(text, (100, 350))  # Draw the text on the screen
-
-    # Create the text used to display the score and draw it on the screen
-    def draw_score(screen, x, y, score):
-        font = pygame.font.Font(None, 36)  # Choose the font for the text
-        text = font.render("Score = " + str(score), 1, (255,255,255))  # Create the text
-        screen.blit(text, (x, y))  # Draw the text on the screen
 
     def _update_screen(self, score):
         global goblins
         # Update images on the screen, and flip to the new screen.
         self.screen.fill((0, 0, 0))
-        playsound = True
         screen.blit(background, (130, 20))
         screen.blit(tower, (600, 430))
         # method for deleting goblins, made an array and delete goblins from the right
@@ -169,8 +171,9 @@ class TowerDefense:
             i = self.goblins[j]
             i.blitme()
             # established terms for what x destination goblins need to reach to damage tower
-            if (i.x > 560 and i.speed > 0 ) or (i.x < 620 and i.speed  < 0):
+            if (i.x > 560 and i.speed > 0 ) or (i.x < 620 and i.speed < 0):
                 self.goblins.remove(i)
+                # minus 10 health for every gob
                 self.current_health -= 10
                 continue
             # made a slight pause for in between swings to kill gobs, 20 ticks, range of = or - 20
@@ -190,15 +193,17 @@ class TowerDefense:
         self.knight.blitme()
         self.basic_health()
         self.draw_time(score)
-        if self.current_health == 0:
-            self.game_over()
 
         # make the most recently drawn screen visible.
         pygame.display.update()
-
+        if self.current_health < 0:
+            return False
+        else:
+            return True
 
 
 if __name__=='__main__':
     # make a game instance, and run the game.
     ai = TowerDefense()
     ai.run_game()
+
